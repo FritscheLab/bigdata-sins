@@ -1,24 +1,24 @@
 # BigItems - Find Your Biggest Data Sins
 
-`bigitems.sh` is a script designed to help users easily identify the largest files and directories in a specified directory or in the current working directory by default. Perfect for students, teachers, and administrators looking to understand what’s taking up the most disk space!
+BigItems is a small Bash utility that lists the largest files and directories in a given location. It is useful for quickly discovering what is consuming disk space.
 
-## Features
+## Prerequisites
 
-- **Target Directory**: Specify a directory to search, or let it default to the current directory.
-- **Largest Files or Directories**: Choose to display the largest files, directories, or both in a user-friendly format.
-- **Customizable Number of Results**: Specify how many results to display (default is the top 10).
-- **Human-Readable Sizes**: Outputs in kilobytes, megabytes, gigabytes, etc., for easy understanding.
-- **Clear Layout**: Results are displayed in a neat table format for quick interpretation.
+- Bash
+- GNU core utilities (`du`, `find`, `sort`, `head`, `numfmt`)
+- Tested on Linux and macOS
 
-## Usage
+## Installation
 
-Place the `bigitems.sh` script in a location accessible from the terminal. Make sure it’s executable:
+Clone this repository and make the script executable:
 
 ```bash
+git clone <repo-url>
+cd bigdata-sins
 chmod +x bigitems.sh
 ```
 
-### Command Syntax
+## Usage
 
 ```bash
 ./bigitems.sh [--files | --dirs | --both] [--top N] [target_directory]
@@ -26,63 +26,33 @@ chmod +x bigitems.sh
 
 ### Options
 
-- **`--files`**: Show the largest files only.
-- **`--dirs`**: Show the largest directories only.
-- **`--both`**: Show both the largest files and directories (this is the default).
-- **`--top N`**: Specify the number of top results to display (default is 10).
-- **`target_directory`**: The directory to analyze (default is the current directory if not specified).
-- **`--help`**: Display this help message.
+- `--files`  – show the largest files only
+- `--dirs`   – show the largest directories only
+- `--both`   – show both files and directories (default)
+- `--top N`  – number of results to display (default: 10)
+- `target_directory` – directory to analyse (defaults to current directory)
+- `--help`   – display help
 
-### Examples
+## Examples
 
-#### 1. Find the 5 Largest Files in a Specific Directory
+**1. Find the 5 largest files in a directory**
 
 ```bash
-./bigitems.sh --files --top 5 /path/to/directory
+./bigitems.sh --files --top 5 /path/to/dir
 ```
 
-Output:
-```
-Largest Files in '/path/to/directory':
-1.2G       ./path/to/largefile1
-934M       ./another/path/largefile2
-...
-```
-
-#### 2. Find the Top 10 Largest Directories in `/var/log`
+**2. Show the largest directories under `/var/log`**
 
 ```bash
 ./bigitems.sh --dirs --top 10 /var/log
 ```
 
-Output:
-```
-Largest Directories in '/var/log':
-2.5G       ./log/some/huge/directory
-1.1G       ./log/another/big/directory
-...
-```
-
-#### 3. Show Both Largest Files and Directories in the Current Directory (Default)
+**3. Display both files and directories in the current directory**
 
 ```bash
 ./bigitems.sh
 ```
 
-Output:
-```
-Largest Directories in '.':
-2.5G       ./some/huge/directory
-1.1G       ./another/big/directory
-...
-
-Largest Files in '.':
-1.2G       ./path/to/largefile1
-934M       ./another/path/largefile2
-...
-```
-
 ## Tips
 
-- Use this script to periodically review large items on your system, especially before backing up files or sharing storage spaces with others.
-- Help students learn about effective storage management by encouraging them to identify and clean up large files that are no longer needed.
+Use this script periodically to locate and clean up large items before backups or when sharing disk space with others.
