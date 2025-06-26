@@ -47,10 +47,11 @@ fi
 show_dirs() {
     echo "Largest Directories in '$TARGET_DIR':"
     # Find directories within TARGET_DIR, calculate their sizes, sort by size, and show the top results
-    find "$TARGET_DIR" -type d -exec du -h {} + | sort -hr | head -n "$NUM_RESULTS" | awk '
-    {
-        printf "%-10s\t%-50s\n", $1, $2
-    }'
+    find "$TARGET_DIR" -mindepth 1 -type d -exec du -sh {} + 2>/dev/null \
+        | sort -hr | head -n "$NUM_RESULTS" \
+        | while IFS=$'\t' read -r size path; do
+            printf "%-10s\t%-50s\n" "$size" "$path"
+        done
     echo
 }
 
@@ -58,10 +59,11 @@ show_dirs() {
 show_files() {
     echo "Largest Files in '$TARGET_DIR':"
     # Find files within TARGET_DIR, calculate their sizes, sort by size, and show the top results
-    find "$TARGET_DIR" -type f -exec du -h {} + | sort -hr | head -n "$NUM_RESULTS" | awk '
-    {
-        printf "%-10s\t%-50s\n", $1, $2
-    }'
+    find "$TARGET_DIR" -type f -exec du -h {} + 2>/dev/null \
+        | sort -hr | head -n "$NUM_RESULTS" \
+        | while IFS=$'\t' read -r size path; do
+            printf "%-10s\t%-50s\n" "$size" "$path"
+        done
     echo
 }
 
