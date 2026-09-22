@@ -1,0 +1,22 @@
+name: Test
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install GNU tools on macOS
+        if: runner.os == 'macOS'
+        run: brew install coreutils findutils
+      - name: Check Bash syntax
+        run: bash -n bigitems.sh
+      - name: Check CLI and filesystem behavior
+        run: python3 -m unittest discover -s tests -v
